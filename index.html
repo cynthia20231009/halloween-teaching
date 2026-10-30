@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cynthia's Halloween English Hub | 万圣节英文分层教学与互动测试</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter, Creepster & Cinzel (for elegant branding) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Creepster&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            halloween: {
+              orange: '#FF7518',
+              brightOrange: '#FF5722',
+              purple: '#8A2BE2',
+              darkPurple: '#1A0B2E',
+              midnight: '#0C0714',
+              cardBg: '#160F23',
+              glow: '#BF55EC',
+              gold: '#FFD700'
+            }
+          },
+          fontFamily: {
+            spooky: ['Creepster', 'cursive'],
+            sans: ['Inter', 'sans-serif'],
+            brand: ['Cinzel', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0C0714;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 117, 24, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(22, 15, 35, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 117, 24, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 117, 24, 0.45);
+      box-shadow: 0 10px 30px -10px rgba(255, 117, 24, 0.3);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #FF7518 0%, #E65100 100%);
+      color: #FFFFFF;
+      box-shadow: 0 4px 20px rgba(255, 117, 24, 0.45);
+      border-color: transparent;
+    }
+
+    .text-glow-orange {
+      text-shadow: 0 0 14px rgba(255, 117, 24, 0.7);
+    }
+
+    .text-glow-gold {
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Option States for Quiz */
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.disabled) {
+      background: rgba(255, 117, 24, 0.15);
+      border-color: rgba(255, 117, 24, 0.5);
+      transform: translateX(4px);
+    }
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: #22c55e !important;
+      color: #86efac !important;
+    }
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: #ef4444 !important;
+      color: #fca5a5 !important;
+    }
+    .quiz-option.disabled {
+      cursor: default;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-3 md:p-6 lg:p-8">
+
+  <div class="max-w-6xl mx-auto">
+    <!-- Header Banner with Cynthia's Studio Branding -->
+    <header class="text-center py-8 md:py-10 mb-8 glass-card rounded-3xl relative overflow-hidden px-4 md:px-8 border border-halloween-orange/30">
+      <div class="absolute -top-12 -left-12 w-40 h-40 bg-halloween-orange opacity-20 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-halloween-purple opacity-25 blur-3xl rounded-full pointer-events-none"></div>
+      
+      <!-- Brand Logo Header -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-halloween-orange via-purple-600 to-amber-300 p-0.5 shadow-lg shadow-halloween-orange/30 flex items-center justify-center">
+          <div class="w-full h-full bg-halloween-midnight rounded-[14px] flex items-center justify-center relative overflow-hidden">
+            <i class="fa-solid fa-hat-wizard text-halloween-orange text-2xl animate-pulse"></i>
+            <span class="absolute bottom-0 text-[9px] font-brand font-bold text-amber-300 tracking-tighter">CYNTHIA</span>
+          </div>
+        </div>
+        <div class="text-center sm:text-left">
+          <div class="flex items-center justify-center sm:justify-start gap-2">
+            <span class="font-brand text-lg md:text-xl font-bold tracking-widest text-amber-300 text-glow-gold">CYNTHIA'S</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 font-semibold tracking-wider uppercase">ENGLISH STUDIO</span>
+          </div>
+          <p class="text-xs text-gray-400 tracking-wide">Premium English Learning System</p>
+        </div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <h1 class="font-spooky text-4xl sm:text-5xl md:text-6xl text-halloween-orange tracking-wider mb-2 text-glow-orange">
+        Halloween English Hub
+      </h1>
+      <p class="text-gray-300 text-sm md:text-base max-w-2xl mx-auto font-light">
+        万圣节分层精品教学方案 · 词汇、语法、口语与分层互动测试
+      </p>
+    </header>
+
+    <!-- Navigation Tab Buttons -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8">
+      <button onclick="switchTab('primary')" id="tab-primary" class="tab-btn active w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border border-white/10 flex items-center justify-center space-x-2 cursor-pointer">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>Primary School (A1-A2)</span>
+      </button>
+
+      <button onclick="switchTab('junior')" id="tab-junior" class="tab-btn w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold text-sm sm:text-base text-gray-300 hover:text-white bg-halloween-cardBg hover:bg-halloween-cardBg/80 transition-all duration-300 border border-white/10 flex items-center justify-center space-x-2 cursor-pointer">
+        <i class="fa-solid fa-hat-wizard"></i>
+        <span>Junior High (A2-B1)</span>
+      </button>
+
+      <button onclick="switchTab('senior')" id="tab-senior" class="tab-btn w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold text-sm sm:text-base text-gray-300 hover:text-white bg-halloween-cardBg hover:bg-halloween-cardBg/80 transition-all duration-300 border border-white/10 flex items-center justify-center space-x-2 cursor-pointer">
+        <i class="fa-solid fa-dragon"></i>
+        <span>Senior High (B2-C1)</span>
+      </button>
+    </div>
+
+    <!-- ==================== Tab 1: Primary School (A1-A2) ==================== -->
+    <main id="content-primary" class="tab-content active space-y-8">
+      <!-- Vocabulary -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-orange/20 text-halloween-orange">
+            <i class="fa-solid fa-book-open text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">核心词汇 (Key Vocabulary)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Jack-o'-lantern</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">南瓜灯</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "We made a funny Jack-o'-lantern with a bright smile."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Costume</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">万圣节服装 / 特殊服饰</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "She is wearing a superhero costume today."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Treat</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">款待 / 糖果 / 款待物</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Give me something sweet to eat, a yummy Halloween treat!"
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Spooky</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">adj.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">幽灵般的 / 诡异的 / 吓人的</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Look at that spooky dark house on the hill."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 md:col-span-2 lg:col-span-2">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Trick or treat!</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-mono">Phrase</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">不给糖就捣蛋！</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Children knock on doors and shout 'Trick or treat!' on Halloween night."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grammar -->
+      <section class="glass-card p-6 rounded-3xl relative overflow-hidden">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-purple/30 text-halloween-glow">
+            <i class="fa-solid fa-bolt text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">语法聚焦 (Grammar Focus)</h2>
+        </div>
+
+        <div class="bg-black/30 rounded-2xl p-4 md:p-5 border border-white/5 mb-4">
+          <div class="text-base font-semibold text-halloween-orange mb-1">现在进行时 (Present Continuous Tense)</div>
+          <p class="text-sm text-gray-300 mb-3">用来表达**此时此刻正在发生**或**万圣节现场正在进行**的动作。</p>
+          <div class="inline-block px-4 py-2 rounded-xl bg-halloween-purple/20 border border-halloween-purple/40 text-sm font-mono text-purple-200">
+            结构: 主语 + am / is / are + V-ing
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium">The kids <span class="text-halloween-orange font-bold">are wearing</span> funny costumes.</p>
+              <p class="text-xs text-gray-400">孩子们正穿着搞笑的万圣节服装。</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium">A witch <span class="text-halloween-orange font-bold">is flying</span> on her broomstick.</p>
+              <p class="text-xs text-gray-400">女巫正骑着她的扫帚飞翔。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Speaking Topics -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+            <i class="fa-solid fa-comments text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">口语讨论题 (Speaking Topics)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">1</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">What costume do you want to wear for Halloween? Why?</p>
+              <p class="text-xs text-gray-400">万圣节你最想穿什么服装？为什么？</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">2</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">If you could get any candy tonight, what would it be?</p>
+              <p class="text-xs text-gray-400">如果今晚你能拿到任何糖果，你最想要哪种？</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Quiz Module -->
+      <section class="glass-card p-6 rounded-3xl border border-halloween-orange/30">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+          <div class="flex items-center space-x-3">
+            <div class="p-2.5 rounded-xl bg-halloween-orange text-black font-bold">
+              <i class="fa-solid fa-gamepad text-lg"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white">Primary Quiz Challenge</h2>
+              <p class="text-xs text-gray-400">测试你的万圣节词汇与语法理解</p>
+            </div>
+          </div>
+          <div id="quiz-score-primary" class="px-3 py-1.5 rounded-full bg-halloween-purple/30 border border-halloween-purple/50 text-amber-300 font-mono text-sm font-semibold">
+            Score: 0 / 3
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="p-q1">
+          <p class="text-sm font-semibold text-white mb-3">1. Look! The witch ________ on her broomstick right now.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('p-q1', 0, false, 'is flying 表示此时此刻正在进行的动作（现在进行时）。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. flies</button>
+            <button onclick="checkAnswer('p-q1', 1, true, '正确！Look! 是现在进行时的标志词，用 is flying。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. is flying</button>
+            <button onclick="checkAnswer('p-q1', 2, false, '主语 A witch 为单数，需用 is flying。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. fly</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="p-q2">
+          <p class="text-sm font-semibold text-white mb-3">2. What do children carve to make a Jack-o'-lantern?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('p-q2', 0, false, 'Apple 是苹果，不是用来做南瓜灯的材料。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. An apple</button>
+            <button onclick="checkAnswer('p-q2', 1, true, '正确！Jack-o\'-lantern 就是雕刻出来的南瓜灯（Pumpkin）。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. A pumpkin</button>
+            <button onclick="checkAnswer('p-q2', 2, false, 'Watermelon 是西瓜，南瓜灯的主体是 Pumpkin。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. A watermelon</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="bg-black/20 p-4 rounded-2xl border border-white/5" id="p-q3">
+          <p class="text-sm font-semibold text-white mb-3">3. What phrase do kids say when knocking on doors on Halloween?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('p-q3', 0, true, '正确！Trick or treat 是万圣节讨要糖果的标准说法。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. Trick or treat!</button>
+            <button onclick="checkAnswer('p-q3', 1, false, 'Happy Birthday 是生日祝福语。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. Happy Birthday!</button>
+            <button onclick="checkAnswer('p-q3', 2, false, 'Merry Christmas 是圣诞节问候语。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. Merry Christmas!</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <div class="mt-4 text-right">
+          <button onclick="resetQuiz('primary')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gray-300 transition-all">
+            <i class="fa-solid fa-rotate-right mr-1"></i> 重置测试
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== Tab 2: Junior High (A2-B1) ==================== -->
+    <main id="content-junior" class="tab-content space-y-8">
+      <!-- Vocabulary -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-orange/20 text-halloween-orange">
+            <i class="fa-solid fa-book-open text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">核心词汇 (Key Vocabulary)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Tradition</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">传统 / 惯例</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Carving pumpkins is an ancient Halloween tradition."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Superstition</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">迷信 / 迷信观念</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Crossing paths with a black cat is considered a superstition."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Disguise</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">v. / n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">伪装 / 装扮 / 假扮</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "He disguised himself as a pirate for the party."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Mysterious</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">adj.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">神秘的 / 难以理解的</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "A mysterious light appeared in the old castle."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Carve</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">v.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">雕刻 / 刻划</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "They carved funny faces into the orange pumpkins."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grammar -->
+      <section class="glass-card p-6 rounded-3xl relative overflow-hidden">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-purple/30 text-halloween-glow">
+            <i class="fa-solid fa-bolt text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">语法聚焦 (Grammar Focus)</h2>
+        </div>
+
+        <div class="bg-black/30 rounded-2xl p-4 md:p-5 border border-white/5 mb-4">
+          <div class="text-base font-semibold text-halloween-orange mb-1">被动语态与目的/原因状语 (Passive Voice & Cause/Effect)</div>
+          <p class="text-sm text-gray-300 mb-3">常用于描述**节日习俗的起源、历史背景**与动作目的。</p>
+          <div class="inline-block px-4 py-2 rounded-xl bg-halloween-purple/20 border border-halloween-purple/40 text-sm font-mono text-purple-200">
+            结构: be + Past Participle (过去分词) + so that...
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium">Jack-o'-lanterns <span class="text-halloween-orange font-bold">were originally carved</span> out of turnips, not pumpkins.</p>
+              <p class="text-xs text-gray-400">南瓜灯最初是由芜菁雕刻而成的，而不是南瓜。</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium">Ancient people wore disguises <span class="text-halloween-orange font-bold">so that</span> they wouldn't be recognized by evil spirits.</p>
+              <p class="text-xs text-gray-400">古代人穿戴伪装，以便不被邪恶的灵魂认出来。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Speaking Topics -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+            <i class="fa-solid fa-comments text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">口语讨论题 (Speaking Topics)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">1</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">Do you think Halloween is more about having fun or preserving cultural traditions?</p>
+              <p class="text-xs text-gray-400">你认为万圣节更多是为了娱乐，还是为了保留文化传统？</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">2</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">How is Halloween different from traditional Chinese festivals like the Ghost Festival (中元节)?</p>
+              <p class="text-xs text-gray-400">万圣节与中国传统节日（如中元节）有什么不同？</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Quiz Module -->
+      <section class="glass-card p-6 rounded-3xl border border-halloween-orange/30">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+          <div class="flex items-center space-x-3">
+            <div class="p-2.5 rounded-xl bg-halloween-orange text-black font-bold">
+              <i class="fa-solid fa-gamepad text-lg"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white">Junior High Quiz Challenge</h2>
+              <p class="text-xs text-gray-400">考察语法被动语态与文化传统表达</p>
+            </div>
+          </div>
+          <div id="quiz-score-junior" class="px-3 py-1.5 rounded-full bg-halloween-purple/30 border border-halloween-purple/50 text-amber-300 font-mono text-sm font-semibold">
+            Score: 0 / 3
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="j-q1">
+          <p class="text-sm font-semibold text-white mb-3">1. Originally, Jack-o'-lanterns ________ out of turnips in Ireland and Scotland.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('j-q1', 0, false, '主语是复数 Jack-o\'-lanterns，且描述历史事实，需用复数过去时态 were carved。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. were carve</button>
+            <button onclick="checkAnswer('j-q1', 1, true, '正确！被动语态过去时：were + past participle (carved)。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. were carved</button>
+            <button onclick="checkAnswer('j-q1', 2, false, 'carved 缺少 be 动词构成被动语态。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. carved</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="j-q2">
+          <p class="text-sm font-semibold text-white mb-3">2. Ancient Celts wore costumes and masks ________ they wouldn't be recognized by spirits.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('j-q2', 0, true, '正确！so that 引导目的状语从句，表达“以便/为了……”。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. so that</button>
+            <button onclick="checkAnswer('j-q2', 1, false, 'because 表原因，后接原因从句，逻辑不符。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. because</button>
+            <button onclick="checkAnswer('j-q2', 2, false, 'although 表让步（尽管），不符合逻辑关系。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. although</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="bg-black/20 p-4 rounded-2xl border border-white/5" id="j-q3">
+          <p class="text-sm font-semibold text-white mb-3">3. A belief or practice resulting from ignorance or fear of the unknown is a ________.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('j-q3', 0, false, 'tradition 意为“传统”，非出于恐惧的盲目相信。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. tradition</button>
+            <button onclick="checkAnswer('j-q3', 1, true, '正确！superstition 意为“迷信观念”。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. superstition</button>
+            <button onclick="checkAnswer('j-q3', 2, false, 'disguise 意为“伪装 / 服饰”。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. disguise</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <div class="mt-4 text-right">
+          <button onclick="resetQuiz('junior')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gray-300 transition-all">
+            <i class="fa-solid fa-rotate-right mr-1"></i> 重置测试
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== Tab 3: Senior High (B2-C1) ==================== -->
+    <main id="content-senior" class="tab-content space-y-8">
+      <!-- Vocabulary -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-orange/20 text-halloween-orange">
+            <i class="fa-solid fa-book-open text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">核心词汇 (Key Vocabulary)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Commercialization</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">商业化</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Some criticize the excessive commercialization of modern holidays."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Pagan</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">adj. / n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">异教的 / 异教徒</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Halloween traces its roots back to ancient pagan harvest festivals."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Haunted</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">adj.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">闹鬼的 / 备受困扰的</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "The village is famous for its centuries-old haunted mansion."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Festivity</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">n.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">庆祝活动 / 节日气氛</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "The city lights up as the annual festivities begin."
+            </p>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-halloween-orange">Evolve</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-mono">v.</span>
+            </div>
+            <p class="text-sm text-gray-300 font-medium mb-3">演变 / 进化 / 逐步发展</p>
+            <p class="text-xs text-gray-400 border-t border-white/5 pt-2 italic">
+              "Over centuries, Samhain evolved into modern Halloween."
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grammar -->
+      <section class="glass-card p-6 rounded-3xl relative overflow-hidden">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-halloween-purple/30 text-halloween-glow">
+            <i class="fa-solid fa-bolt text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">语法聚焦 (Grammar Focus)</h2>
+        </div>
+
+        <div class="bg-black/30 rounded-2xl p-4 md:p-5 border border-white/5 mb-4">
+          <div class="text-base font-semibold text-halloween-orange mb-1">虚拟语气与让步状语从句 (Subjunctive Mood & Concession)</div>
+          <p class="text-sm text-gray-300 mb-3">用于**批判性思维表达、假设性逻辑推导**与学术议论文写作。</p>
+          <div class="inline-block px-4 py-2 rounded-xl bg-halloween-purple/20 border border-halloween-purple/40 text-sm font-mono text-purple-200">
+            结构: If + subject + were to..., subject + would... / Even though + Clause...
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium">If ancient Samhain participants <span class="text-halloween-orange font-bold">were to visit</span> modern Halloween, they <span class="text-halloween-orange font-bold">would be astonished</span> by its degree of commercialization.</p>
+              <p class="text-xs text-gray-400">如果古代的萨温节参与者来到现代万圣节，他们会对它的商业化程度感到震惊。</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3 bg-white/5 p-3 rounded-xl">
+            <i class="fa-solid fa-circle-check text-halloween-orange mt-1"></i>
+            <div>
+              <p class="text-sm text-white font-medium"><span class="text-halloween-orange font-bold">Even though</span> Halloween originated as a pagan religious ritual, it <span class="text-halloween-orange font-bold">has evolved</span> into a global commercial event.</p>
+              <p class="text-xs text-gray-400">尽管万圣节起源于异教宗教仪式，但它已演变为全球性的商业活动。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Speaking Topics -->
+      <section>
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+            <i class="fa-solid fa-comments text-xl"></i>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white">口语讨论题 (Speaking Topics)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">1</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">To what extent has the commercialization of Halloween diluted its traditional cultural significance?</p>
+              <p class="text-xs text-gray-400">万圣节的商业化在多大程度上削弱了其传统的文化内涵？</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-halloween-orange text-white font-bold flex items-center justify-center text-sm shadow-lg">2</div>
+            <div>
+              <p class="text-base text-white font-medium mb-1">Should western festivals like Halloween be widely celebrated in non-Western countries? Discuss both pros and cons.</p>
+              <p class="text-xs text-gray-400">像万圣节这样的西方节日是否应该在非西方国家广泛庆祝？请讨论利弊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Quiz Module -->
+      <section class="glass-card p-6 rounded-3xl border border-halloween-orange/30">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+          <div class="flex items-center space-x-3">
+            <div class="p-2.5 rounded-xl bg-halloween-orange text-black font-bold">
+              <i class="fa-solid fa-gamepad text-lg"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white">Senior High Advanced Quiz</h2>
+              <p class="text-xs text-gray-400">挑战高阶学术词汇与复杂虚拟语气结构</p>
+            </div>
+          </div>
+          <div id="quiz-score-senior" class="px-3 py-1.5 rounded-full bg-halloween-purple/30 border border-halloween-purple/50 text-amber-300 font-mono text-sm font-semibold">
+            Score: 0 / 3
+          </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="s-q1">
+          <p class="text-sm font-semibold text-white mb-3">1. If ancient Samhain priests ________ modern Halloween, they would be deeply surprised.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('s-q1', 0, true, '正确！与将来/假设事实相反的虚拟语气，用 were to visit 或 should visit。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. were to visit</button>
+            <button onclick="checkAnswer('s-q1', 1, false, 'will visit 是陈述语气，不符合虚拟条件句的结构。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. will visit</button>
+            <button onclick="checkAnswer('s-q1', 2, false, 'have visited 无法与主句的 would be 构成虚拟语气搭配。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. have visited</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-6 bg-black/20 p-4 rounded-2xl border border-white/5" id="s-q2">
+          <p class="text-sm font-semibold text-white mb-3">2. Which term refers to the process of adapting something primarily for financial profit?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('s-q2', 0, false, 'Festivity 侧重节日气氛与庆祝活动。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. Festivity</button>
+            <button onclick="checkAnswer('s-q2', 1, true, '正确！Commercialization 意为“商业化”。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. Commercialization</button>
+            <button onclick="checkAnswer('s-q2', 2, false, 'Evolution 指自然演化或进化过程。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. Evolution</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="bg-black/20 p-4 rounded-2xl border border-white/5" id="s-q3">
+          <p class="text-sm font-semibold text-white mb-3">3. ________ Halloween originated from a pagan harvest festival, it is now celebrated worldwide.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button onclick="checkAnswer('s-q3', 0, true, '正确！Although / Even though 引导让步状语从句，表“尽管”。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">A. Although</button>
+            <button onclick="checkAnswer('s-q3', 1, false, 'Because 引导原因状语从句，前后文逻辑为转折让步而非因果。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">B. Because</button>
+            <button onclick="checkAnswer('s-q3', 2, false, 'Unless 意为“除非”，逻辑不通。')" class="quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300">C. Unless</button>
+          </div>
+          <div class="explanation hidden text-xs mt-2 p-2.5 rounded-xl bg-white/5"></div>
+        </div>
+
+        <div class="mt-4 text-right">
+          <button onclick="resetQuiz('senior')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gray-300 transition-all">
+            <i class="fa-solid fa-rotate-right mr-1"></i> 重置测试
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer with Cynthia's Branding -->
+    <footer class="mt-12 text-center text-xs text-gray-400 py-6 border-t border-white/10 flex flex-col items-center justify-center gap-2">
+      <div class="flex items-center space-x-2 text-amber-300 font-brand tracking-widest text-sm">
+        <i class="fa-solid fa-star text-xs"></i>
+        <span>CYNTHIA'S ENGLISH STUDIO</span>
+        <i class="fa-solid fa-star text-xs"></i>
+      </div>
+      <p class="text-gray-500">© Halloween Interactive Curriculum • Tailored for Google Sites Embeds</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Tab switching logic
+    function switchTab(targetTab) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-gray-300', 'bg-halloween-cardBg');
+      });
+
+      const activeContent = document.getElementById('content-' + targetTab);
+      const activeBtn = document.getElementById('tab-' + targetTab);
+
+      if (activeContent && activeBtn) {
+        activeContent.classList.add('active');
+        activeBtn.classList.add('active');
+        activeBtn.classList.remove('text-gray-300', 'bg-halloween-cardBg');
+      }
+    }
+
+    // Interactive Quiz Engine
+    const scores = { primary: 0, junior: 0, senior: 0 };
+    const answeredQuestions = new Set();
+
+    function checkAnswer(questionId, optionIndex, isCorrect, explanationText) {
+      if (answeredQuestions.has(questionId)) return; // prevent re-answering
+      answeredQuestions.add(questionId);
+
+      const qContainer = document.getElementById(questionId);
+      const buttons = qContainer.querySelectorAll('button.quiz-option');
+      
+      buttons.forEach((btn, idx) => {
+        btn.classList.add('disabled');
+        if (idx === optionIndex) {
+          btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+        }
+      });
+
+      // Show explanation
+      const expDiv = qContainer.querySelector('.explanation');
+      if (expDiv) {
+        expDiv.classList.remove('hidden');
+        expDiv.innerHTML = `<span class="font-bold ${isCorrect ? 'text-green-400' : 'text-red-400'}">${isCorrect ? '✓ 正确！' : '✗ 解析：'}</span> ${explanationText}`;
+      }
+
+      // Update Score
+      const tier = questionId.charAt(0); // 'p', 'j', or 's'
+      const tierKey = tier === 'p' ? 'primary' : (tier === 'j' ? 'junior' : 'senior');
+      
+      if (isCorrect) {
+        scores[tierKey] += 1;
+        const scoreBadge = document.getElementById(`quiz-score-${tierKey}`);
+        if (scoreBadge) {
+          scoreBadge.innerText = `Score: ${scores[tierKey]} / 3`;
+        }
+      }
+    }
+
+    function resetQuiz(tier) {
+      const prefix = tier.charAt(0);
+      scores[tier] = 0;
+      const scoreBadge = document.getElementById(`quiz-score-${tier}`);
+      if (scoreBadge) {
+        scoreBadge.innerText = `Score: 0 / 3`;
+      }
+
+      for (let i = 1; i <= 3; i++) {
+        const qId = `${prefix}-q${i}`;
+        answeredQuestions.delete(qId);
+        const qContainer = document.getElementById(qId);
+        if (qContainer) {
+          const buttons = qContainer.querySelectorAll('button.quiz-option');
+          buttons.forEach(btn => {
+            btn.className = 'quiz-option p-3 rounded-xl bg-white/5 border border-white/10 text-left text-xs text-gray-300';
+          });
+          const expDiv = qContainer.querySelector('.explanation');
+          if (expDiv) {
+            expDiv.classList.add('hidden');
+            expDiv.innerHTML = '';
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
